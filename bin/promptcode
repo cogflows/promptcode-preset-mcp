@@ -1,0 +1,5 @@
+#!/usr/bin/env node
+require('child_process').execSync(
+  `node --loader ts-node/esm ${__dirname}/../src/cli.ts ${process.argv.slice(2).join(' ')}`,
+  { stdio: 'inherit' }
+);

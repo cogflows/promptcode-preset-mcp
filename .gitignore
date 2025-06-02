@@ -1,0 +1,60 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build output
+dist/
+build/
+*.tsbuildinfo
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# OS
+.DS_Store
+
+# IDE
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea
+*.swp
+*.swo
+
+# Testing
+coverage/
+.nyc_output/
+
+# Env files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Temporary files
+*.tmp
+*.temp
+tmp/
+temp/
+
+# Generated files
+prompt.txt
+
+# Token cache
+.token-cache.json
+
+# Test workspace (keep the structure but not the content)
+test/workspace/*
+!test/workspace/.promptcode/
+test/workspace/.promptcode/*
+!test/workspace/.promptcode/presets/
+test/workspace/.promptcode/presets/*
+!test/workspace/.promptcode/presets/.gitkeep

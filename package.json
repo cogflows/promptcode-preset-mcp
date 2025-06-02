@@ -1,0 +1,36 @@
+{
+  "name": "promptcode-preset-mcp",
+  "version": "1.0.0",
+  "description": "CLI tool for managing file presets for code prompting",
+  "main": "index.js",
+  "type": "module",
+  "bin": {
+    "promptcode": "./dist/cli.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "dev": "nodemon --exec 'node --loader ts-node/esm' src/server.ts",
+    "cli": "node --loader ts-node/esm src/cli.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.7.1",
+  "dependencies": {
+    "execa": "^9.6.0",
+    "express": "^5.1",
+    "gpt-tokenizer": "^2.9.0",
+    "open": "^10.1.2",
+    "tiktoken": "^1.0.21",
+    "zod": "^3.25.48"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.2",
+    "@types/node": "^22.15.29",
+    "@types/open": "^6.2.1",
+    "nodemon": "^3.1.10",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  }
+}
