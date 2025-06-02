@@ -3,6 +3,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { loadPresets, loadPreset } from "./presetManager.js";
 import { countTokensInFile } from "./tokenCounter.js";
+import { buildTree, treeToString } from "./fileTree.js";
 
 const WORKSPACE = process.env.WORKSPACE ?? process.cwd();
 
@@ -42,8 +43,23 @@ async function getPreset(name: string) {
       process.exit(1);
     }
     
-    // Concatenate all files
-    let output = "";
+    // First, gather file info with tokens for the tree
+    const fileInfo = await Promise.all(
+      preset.files.map(async f => ({
+        path: f,
+        tokens: await countTokensInFile(path.join(WORKSPACE, f)),
+      })),
+    );
+
+    // Build and render the file tree
+    const tree = buildTree(WORKSPACE, fileInfo);
+    const treeStr = treeToString(tree);
+
+    // Concatenate all files with tree at the beginning
+    let output = "# File Tree\n\n";
+    output += treeStr;
+    output += "\n\n# File Contents\n\n";
+    
     for (const file of preset.files) {
       const filepath = path.join(WORKSPACE, file);
       const content = await fs.readFile(filepath, "utf-8");
@@ -75,6 +91,33 @@ async function getPreset(name: string) {
   }
 }
 
+async function getPresetTree(name: string) {
+  try {
+    const preset = await loadPreset(WORKSPACE, name);
+    if (!preset) {
+      console.error(`Preset "${name}" not found`);
+      process.exit(1);
+    }
+    
+    // Gather file info with tokens for the tree
+    const fileInfo = await Promise.all(
+      preset.files.map(async f => ({
+        path: f,
+        tokens: await countTokensInFile(path.join(WORKSPACE, f)),
+      })),
+    );
+
+    // Build and render the file tree
+    const tree = buildTree(WORKSPACE, fileInfo);
+    const treeStr = treeToString(tree);
+    
+    console.log(treeStr);
+  } catch (error) {
+    console.error("Error getting preset tree:", error);
+    process.exit(1);
+  }
+}
+
 // Parse command line arguments
 const command = process.argv[2];
 const arg = process.argv[3];
@@ -93,11 +136,20 @@ switch (command) {
     await getPreset(arg);
     break;
     
+  case "tree":
+    if (!arg) {
+      console.error("Usage: pnpm cli tree <preset-name>");
+      process.exit(1);
+    }
+    await getPresetTree(arg);
+    break;
+    
   default:
     console.log("Usage:");
     console.log("  promptcode ls                 - List all presets");
     console.log("  promptcode get <name>         - Export preset to temp file and print path");
     console.log("  promptcode get <name> --open  - Export preset and open in default editor");
+    console.log("  promptcode tree <name>        - Display file tree for preset");
     console.log("");
     console.log("Environment:");
     console.log("  WORKSPACE=<path>              - Set workspace directory (default: current directory)");
