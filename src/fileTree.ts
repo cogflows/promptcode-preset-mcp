@@ -24,9 +24,13 @@ export function buildTree(
         // leaf file
         cursor[part].tokens = tokens;
       } else {
-        cursor[part].children ??= {};
+        if (!cursor[part].children) {
+          cursor[part].children = [] as any;
+        }
       }
-      cursor = cursor[part].children as Record<string, TreeNode>;
+      if (idx < parts.length - 1) {
+        cursor = cursor[part].children as any;
+      }
     });
   }
 

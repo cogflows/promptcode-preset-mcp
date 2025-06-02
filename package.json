@@ -1,9 +1,19 @@
 {
   "name": "@cogflows/promptcode-preset-mcp",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "CLI tool for managing file presets for code prompting",
-  "main": "index.js",
+  "main": "./dist/server.js",
   "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/server.js",
+      "types": "./dist/server.d.ts"
+    },
+    "./cli": {
+      "import": "./dist/cli.js",
+      "types": "./dist/cli.d.ts"
+    }
+  },
   "bin": {
     "promptcode": "./dist/cli.js"
   },
@@ -17,6 +27,13 @@
   "keywords": ["cli", "prompt", "code", "preset", "ai", "llm"],
   "author": "cogflows",
   "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "homepage": "https://github.com/cogflows/promptcode-preset-mcp#readme",
+  "bugs": {
+    "url": "https://github.com/cogflows/promptcode-preset-mcp/issues"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/cogflows/promptcode-preset-mcp.git"

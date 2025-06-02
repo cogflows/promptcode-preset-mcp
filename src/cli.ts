@@ -1,9 +1,15 @@
 #!/usr/bin/env node
 import fs from "node:fs/promises";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { loadPresets, loadPreset } from "./presetManager.js";
 import { countTokensInFile } from "./tokenCounter.js";
 import { buildTree, treeToString } from "./fileTree.js";
+
+// Get package version
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const packageJson = JSON.parse(await fs.readFile(path.join(__dirname, '..', 'package.json'), 'utf-8'));
+const VERSION = packageJson.version;
 
 const WORKSPACE = process.env.WORKSPACE ?? process.cwd();
 
@@ -122,6 +128,12 @@ async function getPresetTree(name: string) {
 const command = process.argv[2];
 const arg = process.argv[3];
 
+// Handle version flag
+if (command === '--version' || command === '-v') {
+  console.log(VERSION);
+  process.exit(0);
+}
+
 switch (command) {
   case "ls":
   case "list":
@@ -145,11 +157,13 @@ switch (command) {
     break;
     
   default:
+    console.log(`promptcode v${VERSION}\n`);
     console.log("Usage:");
     console.log("  promptcode ls                 - List all presets");
     console.log("  promptcode get <name>         - Export preset to temp file and print path");
     console.log("  promptcode get <name> --open  - Export preset and open in default editor");
     console.log("  promptcode tree <name>        - Display file tree for preset");
+    console.log("  promptcode --version          - Show version information");
     console.log("");
     console.log("Environment:");
     console.log("  WORKSPACE=<path>              - Set workspace directory (default: current directory)");

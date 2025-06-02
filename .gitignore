@@ -48,6 +48,9 @@ temp/
 # Generated files
 prompt.txt
 
+# npm pack artifacts
+*.tgz
+
 # Token cache
 .token-cache.json
 
