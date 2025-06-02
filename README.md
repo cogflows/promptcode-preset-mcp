@@ -4,9 +4,29 @@ A CLI tool for managing file presets for code prompting. Quickly assemble collec
 
 ## Installation
 
+### Global installation (recommended)
+
 ```bash
+# Install from npm
+pnpm install -g @cogflows/promptcode-preset-mcp
+
+# Or install from GitHub
+pnpm install -g github:cogflows/promptcode-preset-mcp
+```
+
+### Local development
+
+```bash
+# Clone the repository
+git clone https://github.com/cogflows/promptcode-preset-mcp.git
+cd promptcode-preset-mcp
+
 # Install dependencies
 pnpm install
+
+# Build and link globally
+pnpm build
+pnpm link --global
 ```
 
 ## Usage
@@ -14,25 +34,25 @@ pnpm install
 ### List presets
 
 ```bash
-pnpm cli ls
+promptcode ls
 ```
 
 ### Get preset content
 
 ```bash
 # Export to temp file and print path
-pnpm cli get <preset-name>
+promptcode get <preset-name>
 
 # Export and open in default editor
-pnpm cli get <preset-name> --open
+promptcode get <preset-name> --open
 ```
 
 ### Set workspace directory
 
 ```bash
 # Use environment variable
-WORKSPACE=/path/to/project pnpm cli ls
-WORKSPACE=/path/to/project pnpm cli get core
+WORKSPACE=/path/to/project promptcode ls
+WORKSPACE=/path/to/project promptcode get core
 ```
 
 ## Creating Presets
@@ -69,7 +89,7 @@ Example preset file `.promptcode/presets/core.json`:
 
 3. List available presets:
    ```bash
-   pnpm cli ls
+   promptcode ls
    ```
    Output:
    ```json
@@ -84,17 +104,17 @@ Example preset file `.promptcode/presets/core.json`:
 
 4. Export preset content:
    ```bash
-   pnpm cli get api
+   promptcode get api
    ```
    Output: `/var/folders/.../T/preset-api-2025-06-02T19-12-41-238Z.txt`
 
 5. Use the exported file with your AI tool:
    ```bash
    # Copy to clipboard (macOS)
-   cat $(pnpm cli get api) | pbcopy
+   cat $(promptcode get api) | pbcopy
    
    # Or open directly
-   pnpm cli get api --open
+   promptcode get api --open
    ```
 
 ## Features

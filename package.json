@@ -1,5 +1,5 @@
 {
-  "name": "promptcode-preset-mcp",
+  "name": "@cogflows/promptcode-preset-mcp",
   "version": "1.0.0",
   "description": "CLI tool for managing file presets for code prompting",
   "main": "index.js",
@@ -10,12 +10,22 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
+    "prepublishOnly": "pnpm build",
     "dev": "nodemon --exec 'node --loader ts-node/esm' src/server.ts",
     "cli": "node --loader ts-node/esm src/cli.ts"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": ["cli", "prompt", "code", "preset", "ai", "llm"],
+  "author": "cogflows",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cogflows/promptcode-preset-mcp.git"
+  },
+  "files": [
+    "dist/",
+    "README.md",
+    "LICENSE"
+  ],
   "packageManager": "pnpm@10.7.1",
   "dependencies": {
     "execa": "^9.6.0",
